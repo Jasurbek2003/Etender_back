@@ -18,22 +18,13 @@ jobs:
         with:
           python-version: '3.11'  # Specify Python 3.11
 
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-
-      - name: Install SSH and SSHPass
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y sshpass openssh-client
-
       - name: Deploy to Server
         env:
           SERVER_IP: ${{ secrets.SERVER_IP }}
           SERVER_USER: ${{ secrets.SERVER_USER }}
           SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
         run: |
-          sshpass -p $SERVER_PASSWORD ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP << EOF
+          sshpass -p w6Mm3HTUF ssh -o StrictHostKeyChecking=no root@146.190.235.222 << EOF
             cd /home/Etender_back/
             git pull origin main
             source /path/to/venv/bin/activate  # Activate your virtual environment
