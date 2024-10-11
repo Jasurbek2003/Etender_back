@@ -28,7 +28,7 @@ jobs:
           SERVER_USER: ${{ secrets.SERVER_USER }}
           SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
         run: |
-            ssh $SERVER_USER@$SERVER_IP "echo $SERVER_PASSWORD | sudo -S bash -s" < ./deploy.sh
+            ssh $SERVER_USER@$SERVER_IP "echo $SERVER_PASSWORD | sudo -S bash -s" < pwd
             cd /home/Etender_back/
             git pull origin main
             pip install -r requirements.txt
