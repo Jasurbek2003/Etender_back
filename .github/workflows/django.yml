@@ -22,19 +22,23 @@ jobs:
         run: |
           python -m pip install --upgrade pip
 
+      - name: Install SSH and SSHPass
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y sshpass openssh-client
+
       - name: Deploy to Server
         env:
           SERVER_IP: ${{ secrets.SERVER_IP }}
           SERVER_USER: ${{ secrets.SERVER_USER }}
           SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
         run: |
-            sshpass -p $SERVER_PASSWORD ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP
+          sshpass -p $SERVER_PASSWORD ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP << EOF
             cd /home/Etender_back/
             git pull origin main
+            source /path/to/venv/bin/activate  # Activate your virtual environment
             pip install -r requirements.txt
             python manage.py migrate
             python manage.py collectstatic --noinput
-            pwd
-       
-            
-          
+            sudo systemctl restart gunicorn  # Restart your application server
+          EOF
