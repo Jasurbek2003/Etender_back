@@ -21,8 +21,6 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
-          ls
 
       - name: Deploy to Server
         env:
@@ -30,10 +28,13 @@ jobs:
           SERVER_USER: ${{ secrets.SERVER_USER }}
           SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
         run: |
-          
+          sshpass -p "${{ secrets.SSH_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << EOF
+            cd /home/Etender_back/
             git pull origin main
             pip install -r requirements.txt
             python manage.py migrate
             python manage.py collectstatic --noinput
             pwd
+          EOF
+            
           
