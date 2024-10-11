@@ -24,7 +24,7 @@ jobs:
           SERVER_USER: ${{ secrets.SERVER_USER }}
           SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
         run: |
-          sshpass -p w6Mm3HTUF ssh -o StrictHostKeyChecking=no root@146.190.235.222 << EOF
+          sshpass -p $SERVER_PASSWORD ssh -o StrictHostKeyChecking=no -t $SERVER_USER@$SERVER_IP << EOF
             cd /home/Etender_back/
             git pull origin main
             source /path/to/venv/bin/activate  # Activate your virtual environment
