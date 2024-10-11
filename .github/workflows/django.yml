@@ -24,9 +24,6 @@ jobs:
           pip install -r requirements.txt
           ls
 
-      - name: Install sshpass
-        run: sudo apt-get install sshpass
-
       - name: Deploy to Server
         env:
           SERVER_IP: ${{ secrets.SERVER_IP }}
