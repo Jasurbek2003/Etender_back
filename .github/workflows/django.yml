@@ -27,9 +27,8 @@ jobs:
           sshpass -p $SERVER_PASSWORD ssh -o StrictHostKeyChecking=no -t $SERVER_USER@$SERVER_IP << EOF
             cd /home/Etender_back/
             git pull origin main
-            source /path/to/venv/bin/activate  # Activate your virtual environment
             pip install -r requirements.txt
             python manage.py migrate
             python manage.py collectstatic --noinput
-            sudo systemctl restart gunicorn  # Restart your application server
+            pwd
           EOF
