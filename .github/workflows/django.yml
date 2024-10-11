@@ -32,12 +32,9 @@ jobs:
           SERVER_USER: ${{ secrets.SERVER_USER }}
           SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
         run: |
-          echo "${SERVER_PASSWORD}" | sshpass ssh -o StrictHostKeyChecking=no ${SERVER_USER}@${SERVER_IP} << 'EOF'
-            cd /path/to/your/project
-            git pull origin main  # Ensure this matches your branch
-            source /path/to/your/venv/bin/activate  # Activate your virtual environment
+            git pull origin main
             pip install -r requirements.txt
             python manage.py migrate
             python manage.py collectstatic --noinput
-            sudo systemctl restart gunicorn  # Adjust as necessary for your WSGI server
-          EOF
+            sudo systemctl restart gunicorn
+          
