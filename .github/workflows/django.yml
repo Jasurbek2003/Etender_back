@@ -27,8 +27,8 @@ jobs:
           sshpass -p $SERVER_PASSWORD ssh -o StrictHostKeyChecking=no -t $SERVER_USER@$SERVER_IP << EOF
             cd /home/Etender_back/
             git pull origin main
-            pip3 install -r requirements.txt
-            python3 manage.py migrate
-            python3 manage.py collectstatic --noinput
+            /home/Etender_back/venv/bin/pip3 install -r requirements.txt
+            /home/Etender_back/venv/bin/python3 manage.py migrate
+            /home/Etender_back/venv/bin/python3 manage.py collectstatic --noinput
             sudo supervisorctl restart etender
           EOF
