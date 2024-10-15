@@ -81,7 +81,6 @@ WSGI_APPLICATION = 'Etender.wsgi.application'
 # if windows use sqlite3 else use postgresql
 import os
 
-
 if os.name == 'nt':
     DATABASES = {
         'default': {
@@ -94,20 +93,12 @@ else:
         'default': {
             'Engine': 'django.db.backends.postgresql',
             'NAME': 'etender',
-            'HOST': 'localhost',
+            'HOST': '127.0.0.1',
             'USER': 'etender',
             'PASSWORD': 'etender',
-            'PORT': '5432'
+            'PORT': 5432
         }
     }
-
-#
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
 
 
 # Password validation
