@@ -263,3 +263,33 @@ class TenderProductAdmin(admin.ModelAdmin):
 
 
 admin.site.register(TenderProduct, TenderProductAdmin)
+
+class CheckedTenderAdmin(admin.ModelAdmin):
+    list_display = ('tender_id', 'category_id')
+    search_fields = ('tender_id', 'category_id')
+    list_filter = ('tender_id', 'category_id')
+    ordering = ('tender_id', 'category_id')
+    fieldsets = (
+        (None, {
+            'fields': ('tender_id', 'category_id')
+        }),
+    )
+
+    actions = [
+        'export_as_csv',
+    ]
+
+    def export_as_csv(self, request, queryset):
+        f = io.StringIO()
+        writer = csv.writer(f)
+        writer.writerow(["tender_id", "category_id"])
+        for s in queryset:
+            writer.writerow([s.tender_id, s.category_id])
+        f.seek(0)
+        response = HttpResponse(f, content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename=checked_tender.csv'
+        return response
+
+    export_as_csv.short_description = "Export Selected as CSV"
+
+admin.site.register(CheckedTender, CheckedTenderAdmin)
