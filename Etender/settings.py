@@ -78,18 +78,8 @@ WSGI_APPLICATION = 'Etender.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-# if windows use sqlite3 else use postgresql
-import os
 
-if os.name == 'nt':
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
-else:
-    DATABASES = {
+DATABASES = {
         'default': {
             'Engine': 'django.db.backends.postgresql',
             'NAME': 'etender',
