@@ -2,7 +2,6 @@ import requests
 from django import forms
 from django.contrib import admin
 
-
 import csv
 from django.http import HttpResponse
 import io
@@ -12,6 +11,7 @@ from .models import *
 import openpyxl
 from openpyxl.utils import get_column_letter
 from django.http import HttpResponse
+
 
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('category_id', 'name',)
@@ -182,7 +182,6 @@ class TenderAdmin(admin.ModelAdmin):
         response['Content-Disposition'] = 'attachment; filename=tender.json'
         return response
 
-
     def export_to_excel(self, request, queryset):
         workbook = openpyxl.Workbook()
         worksheet = workbook.active
@@ -203,8 +202,10 @@ class TenderAdmin(admin.ModelAdmin):
             row = [
                 tender.tender_id, tender.name, tender.display_number, "Tender" if tender.type == "1" else "Auction",
                 str(tender.start_date), str(tender.end_date),
-                tender.cost, tender.currency, tender.seller_name, tender.seller_tin, tender.region_name, tender.district_name,
-                tender.seller_id, tender.category.name if tender.category else "", "https://etender.uzex.uz/lot/" + str(tender.tender_id)
+                tender.cost, tender.currency, tender.seller_name, tender.seller_tin, tender.region_name,
+                tender.district_name,
+                tender.seller_id, tender.category.name if tender.category else "",
+                "https://etender.uzex.uz/lot/" + str(tender.tender_id)
             ]
             for col_num, cell_value in enumerate(row, 1):
                 cell = worksheet.cell(row=row_num, column=col_num)
@@ -218,7 +219,6 @@ class TenderAdmin(admin.ModelAdmin):
         response['Content-Disposition'] = 'attachment; filename=tenders.xlsx'
         workbook.save(response)
         return response
-
 
     def has_add_permission(self, request):
         return False
@@ -264,6 +264,7 @@ class TenderProductAdmin(admin.ModelAdmin):
 
 admin.site.register(TenderProduct, TenderProductAdmin)
 
+
 class CheckedTenderAdmin(admin.ModelAdmin):
     list_display = ('tender_id', 'category_id')
     search_fields = ('tender_id', 'category_id')
@@ -291,5 +292,6 @@ class CheckedTenderAdmin(admin.ModelAdmin):
         return response
 
     export_as_csv.short_description = "Export Selected as CSV"
+
 
 admin.site.register(CheckedTender, CheckedTenderAdmin)
