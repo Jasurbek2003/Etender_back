@@ -16,6 +16,16 @@ class CategoryAPIView(APIView):
         data = query_to_data(categories, request)
         return data
 
+    @staticmethod
+    def post(request):
+        data = request.data
+        if not Category.objects.filter(category_id=data['category_id']).exists():
+            Category.objects.create(
+                category_id=data['category_id'],
+                name=data['name']
+            )
+        return Response(status=201)
+
 
 class ProductAPIView(APIView):
     @staticmethod
@@ -225,3 +235,4 @@ class TelegramUserAPIView(APIView):
                 last_name=data['last_name']
             )
         return Response(status=200)
+
