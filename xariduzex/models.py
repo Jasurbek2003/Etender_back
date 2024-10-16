@@ -7,7 +7,7 @@ from etenderuzex.models import type_choices, currency_choices, Category
 
 class XariduzexCheck(models.Model):
     tender_id = models.IntegerField(unique=True)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category = models.TextField()
 
     def __str__(self):
         return f"{self.tender_id} - {self.name}"
