@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "etenderuzex.apps.EtenderuzexConfig",
 
     'rest_framework',
+    "xariduzex.apps.XariduzexConfig"
 
 ]
 

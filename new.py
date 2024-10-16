@@ -1,3 +1,5 @@
+import requests
+
 data = [
     {
         'Id': 1363024, 'Order_Num': 1, 'Category_Id': 118144, 'Category_Name': 'Металлы основные',
@@ -85,3 +87,9 @@ data = [
         'Js_Additional_Expenses': None, 'Is_File_Required': None, 'File_Name': None, 'File_Path': None
     }
 ]
+
+response = requests.put("http://209.38.43.108/etenderuzex/tender/", json={})
+print(response.status_code)
+while response.status_code != 200:
+    print(response.status_code)
+    response = requests.put("http://209.38.43.108/etenderuzex/tender/", json={})

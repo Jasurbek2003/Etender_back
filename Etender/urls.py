@@ -10,4 +10,5 @@ urlpatterns = [
     path('etenderuzex/tender/', TenderAPIView.as_view()),
     path('etenderuzex/check/', CheckedTenderAPIView.as_view()),
     path('etenderuzex/user/', TelegramUserAPIView.as_view()),
+    path('xariduzex/', XaridUzexAPIView.as_view()),
 ]
