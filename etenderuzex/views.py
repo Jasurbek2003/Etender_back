@@ -210,12 +210,12 @@ class XaridUzexAPIView(APIView):
         while len(response) > 0:
             for i in response:
                 if not XariduzexCheck.objects.filter(tender_id=i['id']).exists():
-                    if Category.objects.filter(name=i['category']).exists():
+                    if Category.objects.filter(name=i['category_name']).exists():
                         new_data = requests.get(f'https://xarid-api-auction.uzex.uz/Common/GetLot/{i["id"]}').json()
                         Tender.objects.create(
                             tender_id=i['id'],
                             name="-",
-                            category=Category.objects.get(name=i['category']),
+                            category=Category.objects.get(name=i['category_name']),
                             type="2",
                             display_number=i['display_no'],
                             start_date=new_data['start_date'],
@@ -241,7 +241,7 @@ class XaridUzexAPIView(APIView):
                                 "region_name": new_data["region_name"],
                                 "district_name": None,
                                 "seller_id": None,
-                                "category_id": Category.objects.get(name=i['category']).category_id,
+                                "category_id": Category.objects.get(name=i['category_name']).category_id,
                             }
                         )
                         XariduzexCheck.objects.create(tender_id=i['id'], category=Category.objects.get(name=i['category']))
