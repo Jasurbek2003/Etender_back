@@ -244,7 +244,7 @@ class XaridUzexAPIView(APIView):
                                 "category_id": Category.objects.get(name=i['category_name']).category_id,
                             }
                         )
-                        XariduzexCheck.objects.create(tender_id=i['id'], category=Category.objects.get(name=i['category']))
+                    XariduzexCheck.objects.create(tender_id=i['id'], category=Category.objects.get(name=i['category_name']))
             f += 20
             data = {"region_ids": [], "from": f, "to": f + 20}
             response = requests.post('https://xarid-api-auction.uzex.uz/Common/GetMinimizedLotsList', json=data).json()
