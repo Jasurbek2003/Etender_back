@@ -10,7 +10,7 @@ class XariduzexCheck(models.Model):
     category = models.TextField()
 
     def __str__(self):
-        return f"{self.tender_id} - {self.name}"
+        return f"{self.tender_id}"
 
     class Meta:
         verbose_name_plural = 'Xariduzex Checks'
