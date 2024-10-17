@@ -6,6 +6,7 @@ import csv
 from django.http import HttpResponse
 import io
 
+from xariduzex.models import XariduzexCheck
 from .models import *
 
 import openpyxl
@@ -295,3 +296,36 @@ class CheckedTenderAdmin(admin.ModelAdmin):
 
 
 admin.site.register(CheckedTender, CheckedTenderAdmin)
+
+
+# XariduzexCheck
+class XariduzexCheckAdmin(admin.ModelAdmin):
+    list_display = ('tender_id', 'category')
+    search_fields = ('tender_id', 'category')
+    list_filter = ('tender_id', 'category')
+    ordering = ('tender_id', 'category')
+    fieldsets = (
+        (None, {
+            'fields': ('tender_id', 'category')
+        }),
+    )
+
+    actions = [
+        'export_as_csv',
+    ]
+
+    def export_as_csv(self, request, queryset):
+        f = io.StringIO()
+        writer = csv.writer(f)
+        writer.writerow(["tender_id", "category"])
+        for s in queryset:
+            writer.writerow([s.tender_id, s.category])
+        f.seek(0)
+        response = HttpResponse(f, content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename=xariduzex_check.csv'
+        return response
+
+    export_as_csv.short_description = "Export Selected as CSV"
+
+
+admin.site.register(XariduzexCheck, XariduzexCheckAdmin)
