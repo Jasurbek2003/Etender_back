@@ -212,37 +212,38 @@ class XaridUzexAPIView(APIView):
                 if not XariduzexCheck.objects.filter(tender_id=i['id']).exists():
                     if Category.objects.filter(name=i['category_name']).exists():
                         new_data = requests.get(f'https://xarid-api-auction.uzex.uz/Common/GetLot/{i["id"]}').json()
-                        Tender.objects.create(
-                            tender_id=i['id'],
-                            name="-",
-                            category=Category.objects.get(name=i['category_name']),
-                            type="2",
-                            display_number=i['display_no'],
-                            start_date=new_data['start_date'],
-                            end_date=new_data['end_date'],
-                            cost=i["start_cost"],
-                            currency=i["currency_id"],
-                            seller_name=new_data["customer_name"],
-                            region_name=new_data["region_name"],
-                            url=f"https://xarid.uzex.uz/auction/detail/{i['id']}"
-                        )
-                        new_tenders.append(
-                            {
-                                "tender_id": i['id'],
-                                "name": "-",
-                                "display_number": i['display_no'],
-                                "start_date": i['start_date'],
-                                "end_date": new_data['end_date'],
-                                "clarific_date": None,
-                                "cost": i["start_cost"],
-                                "currency": i["currency_id"],
-                                "seller_name": new_data["customer_name"],
-                                "seller_tin": None,
-                                "region_name": new_data["region_name"],
-                                "district_name": None,
-                                "seller_id": None,
-                                "category_id": i['category_name']
-                            }
+                        if not Tender.objects.filter(tender_id=i['id']).exists():
+                            Tender.objects.create(
+                                tender_id=i['id'],
+                                name="-",
+                                category=Category.objects.get(name=i['category_name']),
+                                type="2",
+                                display_number=i['display_no'],
+                                start_date=new_data['start_date'],
+                                end_date=new_data['end_date'],
+                                cost=i["start_cost"],
+                                currency=i["currency_id"],
+                                seller_name=new_data["customer_name"],
+                                region_name=new_data["region_name"],
+                                url=f"https://xarid.uzex.uz/auction/detail/{i['id']}"
+                            )
+                            new_tenders.append(
+                                {
+                                    "tender_id": i['id'],
+                                    "name": "-",
+                                    "display_number": i['display_no'],
+                                    "start_date": i['start_date'],
+                                    "end_date": new_data['end_date'],
+                                    "clarific_date": None,
+                                    "cost": i["start_cost"],
+                                    "currency": i["currency_id"],
+                                    "seller_name": new_data["customer_name"],
+                                    "seller_tin": None,
+                                    "region_name": new_data["region_name"],
+                                    "district_name": None,
+                                    "seller_id": None,
+                                    "category_id": i['category_name']
+                                }
                         )
                     XariduzexCheck.objects.create(tender_id=i['id'], category=i['category_name'])
             f += 20
